@@ -15,7 +15,17 @@ const builder = new xml2js.Builder(
   }
 );
 const router = express.Router();
-
+app.get(
+  "/",
+  function (
+    req,
+    res
+  ) {
+    res.send(
+      "Welcome to covid-19 estimator api .simply visit /api/v1/on-covid-19/xml or /api/v1/on-covid-19/json"
+    );
+  }
+);
 router.post(
   "/api/v1/on-covid-19",
 
