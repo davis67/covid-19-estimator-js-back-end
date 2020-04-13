@@ -15,7 +15,7 @@ const builder = new xml2js.Builder(
   }
 );
 const router = express.Router();
-app.get(
+router.get(
   "/",
   function (
     req,
