@@ -4,6 +4,9 @@ import path from "path";
 import xml2js from "xml2js";
 import covid19ImpactEstimator from "./data/estimator";
 import appRoot from "app-root-path";
+const router = express.Router();
+
+//xml builder
 const builder = new xml2js.Builder(
   {
     xmldec: {
@@ -15,7 +18,8 @@ const builder = new xml2js.Builder(
     }
   }
 );
-const router = express.Router();
+
+//route for the index page
 router.get(
   "/",
   function (
@@ -27,6 +31,8 @@ router.get(
     );
   }
 );
+
+// /api/v1/on-covid-19 endpoint
 router.post(
   "/api/v1/on-covid-19",
 
@@ -42,6 +48,7 @@ router.post(
       .json(covid);
   }
 );
+// /api/v1/on-covid-19/json endpoint
 router.post(
   "/api/v1/on-covid-19/json",
   (req, res) => {
@@ -55,6 +62,8 @@ router.post(
       .json(covid);
   }
 );
+
+// /api/v1/on-covid-19/xml endpoint
 router.post(
   "/api/v1/on-covid-19/xml",
   (req, res) => {
@@ -78,6 +87,7 @@ router.post(
   }
 );
 
+// logs
 router.get(
   "/api/v1/on-covid-19/logs",
   (req, res) => {
@@ -101,17 +111,16 @@ router.get(
         err,
         data
       ) => {
-        if (err) {
-          res.status(
-            404
-          );
-          return res.send(
-            "Ooops! resource not found"
-          );
-        }
-        res.header(
-          "Content-Type",
+        if (err)
+          throw err;
+
+        res.set(
+          "content-type",
           "text/plain"
+        );
+
+        console.log(
+          data
         );
 
         return res.send(

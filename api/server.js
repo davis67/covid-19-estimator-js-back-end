@@ -17,7 +17,7 @@ const log =
   "/access.log";
 app.use(
   morgan(
-    ":method\t\t:url\t\t:status\t\t:response-time\tms",
+    ":method\t\t:url\t\t:status\t\t:response-time\t\tms",
     {
       stream: fs.createWriteStream(
         log,
@@ -29,6 +29,7 @@ app.use(
   )
 );
 
+//json
 app.use(
   bodyParser.json()
 );
@@ -41,6 +42,7 @@ app.use(
 );
 app.use(router);
 
+//port
 const PORT =
   process.env
     .NODE_ENV ===

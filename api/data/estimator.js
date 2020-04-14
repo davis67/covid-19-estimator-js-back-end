@@ -13,6 +13,7 @@ class HelperEstimator {
     this.impactFactor = impactFactor;
   }
 
+  // compute the duration in days
   computeDuration() {
     let period;
     switch (
@@ -38,6 +39,7 @@ class HelperEstimator {
     return period;
   }
 
+  // factor
   powerFactor() {
     return Math.floor(
       this.computeDuration() /
@@ -45,6 +47,7 @@ class HelperEstimator {
     );
   }
 
+  //compute currently infected
   currentlyInfected() {
     return (
       this
@@ -54,6 +57,7 @@ class HelperEstimator {
     );
   }
 
+  // compute infections by the requested time
   infectionByRequestedTime() {
     const factor = this.powerFactor();
     return (
@@ -64,6 +68,7 @@ class HelperEstimator {
 }
 
 // dollars in flight
+
 const dollarsInFlightComputation = (
   noOfInfections,
   avgIncomePopulationInPercentage,
@@ -119,17 +124,14 @@ const impactCases = (
     data,
     10
   ).computeDuration();
-  const avgDailyIncomePpn = data.region["avgDailyIncomePopulation"];
-    
-  const finalResult =
-    (infectionsByRequestedTime *
-      avgDailyIncomePpn *
-      data.region
-        .avgDailyIncomeInUSD) /
-    period;
 
-  const dollarsInFlight = Math.trunc(
-    finalResult
+  const dollarsInFlight = dollarsInFlightComputation(
+    infectionsByRequestedTime,
+    data.region
+      .avgDailyIncomePopulation,
+    data.region
+      .avgDailyIncomeInUSD,
+    period
   );
   return {
     infectionsByRequestedTime,
@@ -200,34 +202,17 @@ const severeImpactCases = (
   };
 };
 
-// data = {
-//   region: {
-//     name: 'Africa',
-//     avgAge: 19.7,
-//     avgDailyIncomeInUSD: 4,
-//     avgDailyIncomePopulation: 0.73
-//   },
-//   periodType: 'days',
-//   timeToElapse: 38,
-//   reportedCases: 2747,
-//   population: 92931687,
-//   totalHospitalBeds: 678874
-// };
-
 // covid19 impact estimator
 const covid19ImpactEstimator = (
   data
-) => ( {
-    data,
-    impact: impactCases(
-      data
-    ),
-    severeImpact: severeImpactCases(
-      data
-    )
-  });
-
-
-// console.log(covid19ImpactEstimator(data));
+) => ({
+  data,
+  impact: impactCases(
+    data
+  ),
+  severeImpact: severeImpactCases(
+    data
+  )
+});
 
 export default covid19ImpactEstimator;
