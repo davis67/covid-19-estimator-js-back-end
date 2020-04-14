@@ -32,7 +32,10 @@ router.post(
 
   (req, res) => {
     const data =
-      req.body;
+      req.body.data;
+    console.log(
+      data
+    );
     const covid = covid19ImpactEstimator(
       data
     );
@@ -46,7 +49,7 @@ router.post(
   "/api/v1/on-covid-19/json",
   (req, res) => {
     const data =
-      req.body;
+      req.body.data;
     const covid = covid19ImpactEstimator(
       data
     );
@@ -59,7 +62,7 @@ router.post(
   "/api/v1/on-covid-19/xml",
   (req, res) => {
     const data =
-      req.body;
+      req.body.data;
     const covid = covid19ImpactEstimator(
       data
     );
