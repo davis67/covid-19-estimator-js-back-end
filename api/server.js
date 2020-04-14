@@ -1,8 +1,33 @@
 import express from "express";
 import bodyParser from "body-parser";
+import morgan from "morgan";
+import appRoot from "app-root-path";
 import router from "./router";
+import fs from "fs";
 
 const app = express();
+
+//logger
+global.appRoot = appRoot;
+const filePath = global.appRoot.resolve(
+  "dist/logs"
+);
+const log =
+  filePath +
+  "/access.log";
+app.use(
+  morgan(
+    ":method\t\t:url\t\t:status\t\t:response-time\tms",
+    {
+      stream: fs.createWriteStream(
+        log,
+        {
+          flags: "a"
+        }
+      )
+    }
+  )
+);
 
 app.use(
   bodyParser.json()

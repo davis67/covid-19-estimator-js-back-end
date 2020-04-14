@@ -39,7 +39,7 @@ router.post(
 
     return res
       .status(200)
-      .send(covid);
+      .json(covid);
   }
 );
 router.post(
@@ -52,7 +52,7 @@ router.post(
     );
     return res
       .status(200)
-      .send(covid);
+      .json(covid);
   }
 );
 router.post(
@@ -63,8 +63,9 @@ router.post(
     const covid = covid19ImpactEstimator(
       data
     );
-    res.contentType(
-      "application/xml"
+    res.header(
+      "Content-Type",
+      "application/xml; charset=UTF-8"
     );
 
     return res
@@ -108,10 +109,11 @@ router.get(
             "Ooops! resource not found"
           );
         }
-        res.set(
+        res.header(
           "Content-Type",
           "text/plain"
         );
+
         return res.send(
           data
         );
