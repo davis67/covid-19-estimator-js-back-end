@@ -38,7 +38,7 @@ router.post(
     );
 
     return res
-      .status(201)
+      .status(200)
       .send(covid);
   }
 );
@@ -51,7 +51,7 @@ router.post(
       data
     );
     return res
-      .status(201)
+      .status(200)
       .send(covid);
   }
 );
@@ -68,7 +68,7 @@ router.post(
     );
 
     return res
-      .status(201)
+      .status(200)
       .send(
         builder.buildObject(
           covid
