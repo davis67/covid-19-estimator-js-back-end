@@ -29,13 +29,10 @@ router.get(
 router.post(
   "/api/v1/on-covid-19",
 
-  async (
-    req,
-    res
-  ) => {
+  (req, res) => {
     const data =
       req.body;
-    const covid = await covid19ImpactEstimator(
+    const covid = covid19ImpactEstimator(
       data
     );
 
@@ -46,13 +43,10 @@ router.post(
 );
 router.post(
   "/api/v1/on-covid-19/json",
-  async (
-    req,
-    res
-  ) => {
+  (req, res) => {
     const data =
       req.body;
-    const covid = await covid19ImpactEstimator(
+    const covid = covid19ImpactEstimator(
       data
     );
     return res
@@ -62,13 +56,10 @@ router.post(
 );
 router.post(
   "/api/v1/on-covid-19/xml",
-  async (
-    req,
-    res
-  ) => {
+  (req, res) => {
     const data =
       req.body;
-    const covid = await covid19ImpactEstimator(
+    const covid = covid19ImpactEstimator(
       data
     );
     res.contentType(
