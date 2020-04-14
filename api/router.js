@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import xml2js from "xml2js";
 import covid19ImpactEstimator from "./data/estimator";
+import appRoot from "app-root-path";
 const builder = new xml2js.Builder(
   {
     xmldec: {
@@ -79,36 +80,41 @@ router.post(
 router.get(
   "/api/v1/on-covid-19/logs",
   (req, res) => {
-    // return log
-    res.set(
-      "content-type",
-      "text/plain"
+    global.appRoot = appRoot;
+    const filePath = global.appRoot.resolve(
+      "dist/logs"
     );
-    const logStream = fs.createReadStream(
+    const log =
+      filePath +
+      "/access.log";
+    fs.readFile(
       path.join(
-        process.cwd(),
-        "./app.log"
-      )
-    );
-
-    logStream.on(
-      "open",
-      () => {
-        logStream.pipe(
-          res
-        );
-      }
-    );
-    logStream.on(
-      "error",
-      () => {
-        res
-          .status(
-            500
-          )
-          .end(
-            "Log file error"
+        log
+      ),
+      {
+        encoding:
+          "utf8",
+        flag: "r"
+      },
+      (
+        err,
+        data
+      ) => {
+        if (err) {
+          res.status(
+            404
           );
+          return res.send(
+            "Ooops! resource not found"
+          );
+        }
+        res.set(
+          "Content-Type",
+          "text/plain"
+        );
+        return res.send(
+          data
+        );
       }
     );
   }
