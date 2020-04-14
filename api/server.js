@@ -12,10 +12,41 @@ global.appRoot = appRoot;
 const filePath = global.appRoot.resolve(
   "dist/logs"
 );
+morgan.token(
+  "response-time-ms",
+  function getResponse(
+    req,
+    res
+  ) {
+    const time =
+      this[
+        "response-time"
+      ](
+        req,
+        res,
+        0
+      ) < 10
+        ? `0${this[
+            "response-time"
+          ](
+            req,
+            res,
+            0
+          )}ms`
+        : `${this[
+            "response-time"
+          ](
+            req,
+            res,
+            0
+          )}ms`;
+    return time;
+  }
+);
 const log = `${filePath}/access.json`;
 app.use(
   morgan(
-    ":method\t\t:url\t\t:status\t\t:response-time[0]ms",
+    ":method\t\t:url\t\t:status\t\t:response-time-ms",
     {
       stream: fs.createWriteStream(
         log,
