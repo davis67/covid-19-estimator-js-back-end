@@ -15,7 +15,7 @@ const filePath = global.appRoot.resolve(
 const log = `${filePath}/access.json`;
 app.use(
   morgan(
-    ":method\t\t:url\t\t:status\t\t:response-time ms",
+    ":method\t\t:url\t\t:status\t\t:response-time[0]ms",
     {
       stream: fs.createWriteStream(
         log,
