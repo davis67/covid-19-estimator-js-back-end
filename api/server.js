@@ -12,12 +12,10 @@ global.appRoot = appRoot;
 const filePath = global.appRoot.resolve(
   "dist/logs"
 );
-const log =
-  filePath +
-  "/access.log";
+const log = `${filePath}/access.json`;
 app.use(
   morgan(
-    ":method\t\t:url\t\t:status\t\t:response-time\t\tms",
+    ":method\t\t:url\t\t:status\t\t:response-time ms",
     {
       stream: fs.createWriteStream(
         log,

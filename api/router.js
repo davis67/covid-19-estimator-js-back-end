@@ -95,9 +95,7 @@ router.get(
     const filePath = global.appRoot.resolve(
       "dist/logs"
     );
-    const log =
-      filePath +
-      "/access.log";
+    const log = `${filePath}/access.json`;
     fs.readFile(
       path.join(
         log
@@ -118,11 +116,6 @@ router.get(
           "content-type",
           "text/plain"
         );
-
-        console.log(
-          data
-        );
-
         return res.send(
           data
         );
